@@ -1,0 +1,62 @@
+---
+const projects = [
+  {
+    number: "01",
+    title: "BODAS",
+    description: "Momentos reales, emociones sinceras e historias para siempre.",
+    image:
+      "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1600&q=85",
+    alt: "Pareja celebrando su boda",
+  },
+  {
+    number: "02",
+    title: "CONCIERTOS",
+    description: "Energía, movimiento y momentos irrepetibles.",
+    image:
+      "https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=1600&q=85",
+    alt: "Público disfrutando de un concierto",
+  },
+  {
+    number: "03",
+    title: "DOCUMENTALES",
+    description: "Personas reales e historias auténticas, sin guion.",
+    image:
+      "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1600&q=85",
+    alt: "Cámara de cine preparada para grabar",
+  },
+];
+---
+
+<section class="selected-work section" id="work">
+  <div class="section-header">
+    <span class="section-label">TRABAJOS DESTACADOS</span>
+    <span class="section-number">01 — 03</span>
+  </div>
+
+  <div class="projects">
+    {
+      projects.map((project) => (
+        <article class="project">
+          <a
+            href="#contact"
+            class="project-image"
+            aria-label={`Consultar sobre proyectos de ${project.title.toLowerCase()}`}
+          >
+            <img src={project.image} alt={project.alt} loading="lazy" />
+            <div class="project-image-overlay">
+              <span>CONSULTAR PROYECTO</span>
+            </div>
+          </a>
+
+          <div class="project-info">
+            <span class="project-number">{project.number}</span>
+            <div>
+              <h2>{project.title}</h2>
+              <p>{project.description}</p>
+            </div>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>

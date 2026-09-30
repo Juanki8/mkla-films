@@ -1,0 +1,84 @@
+<div class="header-reveal-trigger" aria-hidden="true"></div>
+
+<header class="site-header">
+  <a href="/" class="logo" aria-label="MKLA Films - Inicio">MKLA FILMS</a>
+
+  <nav class="desktop-nav" id="primary-navigation" aria-label="Navegación principal">
+    <a href="#work">TRABAJOS</a>
+    <a href="#about">SOBRE MÍ</a>
+    <a href="#contact">CONTACTO</a>
+  </nav>
+
+  <button
+    class="menu-button"
+    type="button"
+    aria-label="Abrir menú"
+    aria-controls="primary-navigation"
+    aria-expanded="false"
+  >
+    <span aria-hidden="true"></span>
+    <span aria-hidden="true"></span>
+  </button>
+</header>
+
+<script>
+  const button = document.querySelector<HTMLButtonElement>(".menu-button");
+  const header = document.querySelector<HTMLElement>(".site-header");
+  const revealTrigger = document.querySelector<HTMLElement>(".header-reveal-trigger");
+  const desktopPointer = window.matchMedia("(min-width: 761px) and (hover: hover) and (pointer: fine)");
+  let hideTimeout: number | undefined;
+
+  const updateHeaderPosition = () => {
+    document.body.classList.toggle("header-at-top", window.scrollY <= 8);
+  };
+
+  const showHeader = () => {
+    window.clearTimeout(hideTimeout);
+    document.body.classList.add("header-visible");
+  };
+
+  const hideHeaderSoon = () => {
+    window.clearTimeout(hideTimeout);
+    hideTimeout = window.setTimeout(() => {
+      if (!header?.matches(":hover") && !header?.contains(document.activeElement)) {
+        document.body.classList.remove("header-visible");
+      }
+    }, 220);
+  };
+
+  if (desktopPointer.matches) {
+    updateHeaderPosition();
+    window.addEventListener("scroll", updateHeaderPosition, { passive: true });
+    revealTrigger?.addEventListener("pointerenter", showHeader);
+    revealTrigger?.addEventListener("pointerleave", hideHeaderSoon);
+    header?.addEventListener("pointerenter", showHeader);
+    header?.addEventListener("pointerleave", hideHeaderSoon);
+    header?.addEventListener("focusin", showHeader);
+    header?.addEventListener("focusout", hideHeaderSoon);
+  }
+
+  const closeMenu = () => {
+    button?.setAttribute("aria-expanded", "false");
+    button?.setAttribute("aria-label", "Abrir menú");
+    document.body.classList.remove("menu-open");
+  };
+
+  button?.addEventListener("click", () => {
+    const expanded = button.getAttribute("aria-expanded") === "true";
+    const nextExpanded = !expanded;
+    button.setAttribute("aria-expanded", String(nextExpanded));
+    button.setAttribute("aria-label", nextExpanded ? "Cerrar menú" : "Abrir menú");
+    document.body.classList.toggle("menu-open", nextExpanded);
+  });
+
+  document.querySelectorAll("#primary-navigation a").forEach((link) => {
+    link.addEventListener("click", closeMenu);
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeMenu();
+      button?.focus();
+    }
+  });
+</script>
