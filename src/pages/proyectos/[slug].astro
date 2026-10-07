@@ -1,0 +1,28 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import FeaturedFilm from "../../components/FeaturedFilm.astro";
+import Footer from "../../components/Footer.astro";
+import { projects } from "../../data/projects";
+
+export function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+---
+
+<BaseLayout
+  title={`${project.title} — MKLA Films`}
+  description={project.description}
+>
+  <Header />
+  <main id="main-content" class="project-detail-page">
+    <a class="back-to-work" href="/#work">← VOLVER A TRABAJOS</a>
+    <FeaturedFilm project={project} />
+  </main>
+  <Footer />
+</BaseLayout>

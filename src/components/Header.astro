@@ -1,3 +1,7 @@
+---
+const homePrefix = Astro.url.pathname === "/" ? "" : "/";
+---
+
 <div class="header-reveal-trigger" aria-hidden="true"></div>
 
 <header class="site-header">
@@ -6,9 +10,9 @@
   </a>
 
   <nav class="desktop-nav" id="primary-navigation" aria-label="Navegación principal">
-    <a href="#work">TRABAJOS</a>
-    <a href="#about">SOBRE MÍ</a>
-    <a href="#contact">CONTACTO</a>
+    <a href={`${homePrefix}#work`}>TRABAJOS</a>
+    <a href={`${homePrefix}#about`}>SOBRE MÍ</a>
+    <a href={`${homePrefix}#contact`}>CONTACTO</a>
   </nav>
 
   <button

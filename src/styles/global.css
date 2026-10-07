@@ -253,6 +253,7 @@ button:focus-visible {
 }
 .hero h1,
 .featured-film h2,
+.featured-film h1,
 .about h2,
 .contact h2 {
   margin: 1.2rem 0;
@@ -264,6 +265,7 @@ button:focus-visible {
 }
 .hero h1 span,
 .featured-film h2 span,
+.featured-film h1 span,
 .about h2 span,
 .contact h2 span {
   display: block;
@@ -362,6 +364,22 @@ button:focus-visible {
   line-height: 1.55;
 }
 
+.project-detail-page {
+  min-height: 100vh;
+  padding-top: 7.5rem;
+}
+.back-to-work {
+  display: inline-block;
+  margin: 0 clamp(1.25rem, 7vw, 7rem) 1rem;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+}
+.back-to-work:hover {
+  color: var(--accent);
+}
+
 .featured-film {
   display: grid;
   grid-template-columns: 0.85fr 1.15fr;
@@ -373,6 +391,7 @@ button:focus-visible {
   padding-block: 2rem;
 }
 .featured-film h2,
+.featured-film h1,
 .about h2,
 .contact h2 {
   font-size: clamp(3rem, 6.5vw, 6.3rem);
@@ -386,6 +405,11 @@ button:focus-visible {
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.12em;
+}
+.project-detail-description {
+  max-width: 28rem;
+  margin: -1rem 0 2rem;
+  color: var(--text-muted);
 }
 .featured-film-image {
   overflow: hidden;
@@ -487,6 +511,7 @@ button:focus-visible {
 }
 .contact-content > p {
   color: #eee9e2;
+  padding-bottom: 1.5rem;
 }
 .contact-button {
   display: inline-flex;
@@ -579,6 +604,9 @@ button:focus-visible {
     background: rgb(9 9 9 / 58%);
     backdrop-filter: blur(12px);
   }
+  .project-detail-page {
+    padding-top: 2rem;
+  }
   .logo img {
     max-width: min(8rem, 30vw);
     max-height: 2.75rem;
@@ -667,6 +695,7 @@ button:focus-visible {
     font-size: clamp(3.25rem, 15vw, 4.5rem);
   }
   .featured-film h2,
+  .featured-film h1,
   .about h2,
   .contact h2 {
     font-size: clamp(3rem, 13vw, 4.4rem);

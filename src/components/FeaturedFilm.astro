@@ -1,28 +1,36 @@
-<section class="featured-film section">
-  <div class="featured-film-content">
-    <span class="section-label">PELÍCULA DESTACADA</span>
+---
+import type { Project } from "../data/projects";
 
-    <h2>
-      María
-      <span>y Álvaro</span>
-    </h2>
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const [firstName, ...restOfTitle] = project.title.split(" ");
+const secondLine = restOfTitle.join(" ");
+---
+
+<section class="featured-film section" aria-labelledby="project-title">
+  <div class="featured-film-content">
+    <span class="section-label">{project.category}</span>
+
+    <h1 id="project-title">
+      {firstName}
+      {secondLine && <span>{secondLine}</span>}
+    </h1>
 
     <div class="film-meta">
-      <span>VIDEO DE BODA</span>
-      <span>SEVILLA · 2026</span>
+      <span>PROYECTO {project.number}</span>
     </div>
 
-    <a href="#contact" class="play-button" aria-label="Consultar sobre la película de boda de María y Álvaro">
-      <span class="play-icon" aria-hidden="true">▶</span>
-      <span>VER VIDEO COMPLETO</span>
+    <p class="project-detail-description">{project.description}</p>
+
+    <a href="/#contact" class="play-button" aria-label={`Consultar sobre el proyecto ${project.title}`}>
+      <span>HABLEMOS DE TU PROYECTO</span>
     </a>
   </div>
 
   <div class="featured-film-image">
-    <img
-      src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=2200&q=85"
-      alt="María y Álvaro el día de su boda"
-      loading="lazy"
-    />
+    <img src={project.image} alt={project.alt} fetchpriority="high" />
   </div>
 </section>
