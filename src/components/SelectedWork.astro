@@ -11,16 +11,43 @@ import { projects } from "../data/projects";
     {
       projects.map((project) => (
         <article class="project">
-          <a
-            href={`/proyectos/${project.slug}/`}
-            class="project-image"
-            aria-label={`Ver el proyecto ${project.title}`}
-          >
-            <img src={project.image} alt={project.alt} loading="lazy" />
-            <div class="project-image-overlay">
-              <span>VER PROYECTO</span>
-            </div>
-          </a>
+          <div class="project-visual" data-trailer={project.trailer} data-title={project.title}>
+            <a
+              href={`/proyectos/${project.slug}/`}
+              class="project-image"
+              aria-label={`Ver el proyecto ${project.title}`}
+            >
+              <img src={project.image} alt={project.alt} loading="lazy" />
+              {project.trailer && (
+                <video
+                  class="project-trailer"
+                  src={project.trailer}
+                  poster={project.image}
+                  muted
+                  loop
+                  playsinline
+                  preload="none"
+                  aria-hidden="true"
+                />
+              )}
+              <div class="project-image-overlay">
+                <span>VER PROYECTO</span>
+              </div>
+            </a>
+            {project.trailer && (
+              <button
+                class="project-preview-toggle"
+                type="button"
+                aria-label={`Reproducir avance de ${project.title}`}
+                aria-pressed="false"
+              >
+                <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                  <path d="M5 3.5 12 8l-7 4.5z" fill="currentColor" />
+                </svg>
+                <span>VER AVANCE</span>
+              </button>
+            )}
+          </div>
 
           <div class="project-info">
             <span class="project-number">{project.number}</span>
@@ -34,3 +61,65 @@ import { projects } from "../data/projects";
     }
   </div>
 </section>
+
+<script>
+  const trailerQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
+  const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const visuals = document.querySelectorAll<HTMLElement>(".project-visual[data-trailer]");
+
+  const stopPreview = (visual: HTMLElement) => {
+    const video = visual.querySelector("video");
+    const button = visual.querySelector(".project-preview-toggle");
+
+    video?.pause();
+    if (video) video.currentTime = 0;
+    visual.classList.remove("is-playing");
+    button?.setAttribute("aria-pressed", "false");
+    button?.setAttribute("aria-label", `Reproducir avance de ${visual.dataset.title}`);
+    const label = button?.querySelector("span");
+    if (label) label.textContent = "VER AVANCE";
+  };
+
+  const startPreview = (visual: HTMLElement) => {
+    visuals.forEach((other) => {
+      if (other !== visual) stopPreview(other);
+    });
+
+    const video = visual.querySelector("video");
+    const button = visual.querySelector(".project-preview-toggle");
+    if (!video) return;
+
+    visual.classList.add("is-playing");
+    button?.setAttribute("aria-pressed", "true");
+    button?.setAttribute("aria-label", `Pausar avance de ${visual.dataset.title}`);
+    const label = button?.querySelector("span");
+    if (label) label.textContent = "PAUSAR";
+    video.play().catch(() => stopPreview(visual));
+  };
+
+  visuals.forEach((visual) => {
+    const button = visual.querySelector<HTMLButtonElement>(".project-preview-toggle");
+
+    visual.addEventListener("pointerenter", () => {
+      if (trailerQuery.matches && !reducedMotionQuery.matches) startPreview(visual);
+    });
+    visual.addEventListener("pointerleave", () => {
+      if (trailerQuery.matches) stopPreview(visual);
+    });
+    visual.addEventListener("focusin", () => {
+      if (trailerQuery.matches && !reducedMotionQuery.matches) startPreview(visual);
+    });
+    visual.addEventListener("focusout", (event) => {
+      if (trailerQuery.matches && !visual.contains(event.relatedTarget as Node | null)) stopPreview(visual);
+    });
+
+    button?.addEventListener("click", () => {
+      if (visual.classList.contains("is-playing")) {
+        stopPreview(visual);
+        return;
+      }
+
+      startPreview(visual);
+    });
+  });
+</script>

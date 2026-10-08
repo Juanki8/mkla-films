@@ -1,5 +1,6 @@
 ---
 import type { Project } from "../data/projects";
+import VideoPlayer from "./VideoPlayer.astro";
 
 interface Props {
   project: Project;
@@ -25,12 +26,24 @@ const secondLine = restOfTitle.join(" ");
 
     <p class="project-detail-description">{project.description}</p>
 
-    <a href="/#contact" class="play-button" aria-label={`Consultar sobre el proyecto ${project.title}`}>
+    <a
+      href="/#contact"
+      class="play-button"
+      aria-label={`Consultar sobre el proyecto ${project.title}`}
+    >
       <span>HABLEMOS DE TU PROYECTO</span>
     </a>
   </div>
 
   <div class="featured-film-image">
-    <img src={project.image} alt={project.alt} fetchpriority="high" />
+    {project.video ? (
+      <VideoPlayer
+        src={project.video}
+        title={`${project.title} — ${project.category}`}
+        poster={project.image}
+      />
+    ) : (
+      <img src={project.image} alt={project.alt} fetchpriority="high" />
+    )}
   </div>
 </section>
