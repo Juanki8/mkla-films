@@ -7,43 +7,24 @@ interface Props {
 }
 
 const { project } = Astro.props;
-const [firstName, ...restOfTitle] = project.title.split(" ");
-const secondLine = restOfTitle.join(" ");
 ---
 
 <section class="featured-film section" aria-labelledby="project-title">
-  <div class="featured-film-content">
-    <span class="section-label">{project.category}</span>
-
-    <h1 id="project-title">
-      {firstName}
-      {secondLine && <span>{secondLine}</span>}
-    </h1>
-
-    <div class="film-meta">
-      <span>PROYECTO {project.number}</span>
-    </div>
-
-    <p class="project-detail-description">{project.description}</p>
-
-    <a
-      href="/#contact"
-      class="play-button"
-      aria-label={`Consultar sobre el proyecto ${project.title}`}
-    >
-      <span>HABLEMOS DE TU PROYECTO</span>
-    </a>
+  <div class="featured-film-header">
+    <a class="back-to-work" href="/#work">← VOLVER A TRABAJOS</a>
   </div>
 
   <div class="featured-film-image">
-    {project.video ? (
-      <VideoPlayer
-        src={project.video}
-        title={`${project.title} — ${project.category}`}
-        poster={project.image}
-      />
-    ) : (
-      <img src={project.image} alt={project.alt} fetchpriority="high" />
-    )}
+    {
+      project.video ? (
+        <VideoPlayer
+          src={project.video}
+          title={`${project.title}`}
+          poster={project.image}
+        />
+      ) : (
+        <img src={project.image} alt={project.alt} fetchpriority="high" />
+      )
+    }
   </div>
 </section>
