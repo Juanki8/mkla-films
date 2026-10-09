@@ -8,7 +8,7 @@ export const projects = [
     image: "/images/foto-espe.webp",
     video:
       "https://pub-accc02013dc34e678b7b28605c33edc5.r2.dev/videos/video-espe-y-ale.m4v",
-    trailer: "/videos/trailer-espe-ale.m4v",
+    trailer: "https://pub-accc02013dc34e678b7b28605c33edc5.r2.dev/trailer-espe-ale.m4v",
     alt: "Pareja celebrando su boda",
   },
   {
