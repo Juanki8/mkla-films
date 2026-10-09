@@ -21,7 +21,8 @@ export const projects = [
     image: "/images/foto-eu.webp",
     video:
       "https://pub-accc02013dc34e678b7b28605c33edc5.r2.dev/videos/traile-eu-joe.m4v",
-    trailer: "/videos/trailer-eu-joe.m4v",
+    trailer:
+      "https://pub-accc02013dc34e678b7b28605c33edc5.r2.dev/videos/traile-eu-joe.m4v",
     alt: "Público disfrutando de un concierto",
   },
   {
